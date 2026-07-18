@@ -18,8 +18,8 @@
     --accent:#00D4D8;
     --accent-hover:#3EF6F4;
     --accent-dim:#0B2E2F;
-    --wa:#3FBF6B;
-    --wa-dim:#122317;
+    --wa:#00D4D8;
+    --wa-dim:#0B2E2F;
     --radius:10px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -132,17 +132,17 @@
   }
   .btn svg{width:17px; height:17px;}
   .btn-primary{background:var(--wa); color:#0A1410;}
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(63,191,107,.25);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,212,216,.25);}
   .btn-cyan{background:var(--accent); color:#06181A;}
   .btn-cyan:hover{background:var(--accent-hover); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,212,216,.3);}
   .btn-ghost{border-color:var(--line); color:var(--text);}
   .btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
 
-  /* Signature visual: HR node network -> live dashboard */
+  /* Signature visual: real-value stat card (pure CSS, no JS-timed animation) */
   .signature{
     background:linear-gradient(180deg, var(--surface), #101010);
     border:1px solid var(--line); border-radius:16px;
-    padding:22px; position:relative; overflow:hidden;
+    padding:32px; position:relative; overflow:hidden;
     animation:riseIn .9s cubic-bezier(.2,.8,.2,1) .15s both;
     box-shadow:0 0 60px -20px rgba(0,212,216,.18);
   }
@@ -151,44 +151,20 @@
     background:radial-gradient(circle, rgba(0,212,216,.18), transparent 70%);
     filter:blur(10px); pointer-events:none;
   }
-  .node-deco{ position:absolute; top:-56px; right:-56px; width:170px; height:170px; pointer-events:none; opacity:.9; }
-  .node-deco svg{width:100%; height:100%;}
-  .node-deco circle.dot{ animation:nodePulse 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
-  .node-deco circle.dot:nth-child(2){ animation-delay:.3s; }
-  .node-deco circle.dot:nth-child(3){ animation-delay:.6s; }
-  @keyframes nodePulse{ 0%,100%{ opacity:.5; transform:scale(1);} 50%{ opacity:1; transform:scale(1.35);} }
-  .node-deco .edge{ stroke-dasharray:6 5; animation:dashFlow 2s linear infinite; }
-  @keyframes dashFlow{ to{ stroke-dashoffset:-22; } }
-  .sig-tabs{display:flex; gap:6px; margin-bottom:16px; position:relative; z-index:1;}
-  .sig-tab{width:10px; height:10px; border-radius:50%; background:var(--line);}
-  .sig-tab:nth-child(1){background:#E8746A;} .sig-tab:nth-child(2){background:var(--accent);} .sig-tab:nth-child(3){background:#F2C14E;}
-  .sig-label{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:14px; position:relative; z-index:1;}
-  .sheet{
-    display:grid; grid-template-columns:repeat(6,1fr); gap:4px; position:relative; z-index:1;
+  .sig-tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent);
+    text-transform:uppercase; letter-spacing:.12em; margin-bottom:26px; position:relative; z-index:1;
+    display:flex; align-items:center; gap:8px;
   }
-  .cell{
-    aspect-ratio:1.4; background:var(--surface-2); border-radius:3px; border:1px solid var(--line);
-    transition:transform .5s ease, background .5s ease, box-shadow .5s ease;
+  .sig-tag::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px 1px rgba(0,212,216,.7); animation:blink 1.8s infinite; }
+  .sig-stats{ position:relative; z-index:1; display:flex; flex-direction:column; gap:26px; }
+  .sig-stat{ border-top:1px solid var(--line); padding-top:18px; }
+  .sig-stat:first-child{ border-top:none; padding-top:0; }
+  .sig-stat-num{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(30px,3.2vw,40px);
+    color:var(--accent); line-height:1; display:block; margin-bottom:6px;
   }
-  .signature:hover .cell, .signature.animate .cell{
-    background:var(--accent-dim);
-    box-shadow:0 0 8px rgba(0,212,216,.3);
-  }
-  .bars{
-    display:flex; align-items:flex-end; gap:8px; height:120px; margin-top:20px; border-top:1px dashed var(--line); padding-top:16px;
-    position:relative; z-index:1;
-  }
-  .bar{
-    flex:1; background:linear-gradient(180deg, var(--accent), var(--accent-dim));
-    border-radius:4px 4px 0 0; transform:scaleY(0); transform-origin:bottom;
-    transition:transform 1s cubic-bezier(.2,.8,.2,1);
-    box-shadow:0 0 10px -2px rgba(0,212,216,.5);
-  }
-  .signature.animate .bar{transform:scaleY(var(--h));}
-  .sig-caption{
-    display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--muted); margin-top:10px;
-    position:relative; z-index:1;
-  }
+  .sig-stat-label{ color:var(--muted); font-size:13.5px; }
 
   /* Section headings */
   .kicker{font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:12.5px; text-transform:uppercase; letter-spacing:.14em; margin-bottom:12px;}
@@ -270,7 +246,7 @@
     position:fixed; right:22px; bottom:22px; z-index:60;
     width:58px; height:58px; border-radius:50%;
     background:var(--wa); display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 20px rgba(63,191,107,.35);
+    box-shadow:0 6px 20px rgba(0,212,216,.35);
     transition:transform .2s ease, box-shadow .2s ease;
   }
   .wa-float svg{width:28px; height:28px; color:#0A1410;}
@@ -282,7 +258,7 @@
     0%{transform:scale(1); opacity:.55;}
     100%{transform:scale(1.7); opacity:0;}
   }
-  .wa-float:hover{transform:scale(1.08); box-shadow:0 8px 26px rgba(63,191,107,.5);}
+  .wa-float:hover{transform:scale(1.08); box-shadow:0 8px 26px rgba(0,212,216,.5);}
   .wa-float .wa-tip{
     position:absolute; right:70px; top:50%; transform:translateY(-50%);
     background:var(--surface); border:1px solid var(--line); padding:8px 12px; border-radius:8px;
@@ -331,10 +307,6 @@
 
   .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.in{opacity:1; transform:translateY(0);}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
 </style>
 </head>
 <body>
@@ -381,21 +353,21 @@
     </div>
 
     <div class="signature" id="signature">
-      <div class="node-deco">
-        <svg viewBox="0 0 170 170">
-          <line class="edge" x1="40" y1="130" x2="95" y2="45" stroke="rgba(0,212,216,.45)" stroke-width="1.4"/>
-          <line class="edge" x1="95" y1="45" x2="145" y2="95" stroke="rgba(0,212,216,.45)" stroke-width="1.4"/>
-          <line class="edge" x1="40" y1="130" x2="145" y2="95" stroke="rgba(0,212,216,.3)" stroke-width="1.4"/>
-          <circle class="dot" cx="40" cy="130" r="6" fill="#00D4D8"/>
-          <circle class="dot" cx="95" cy="45" r="6" fill="#00D4D8"/>
-          <circle class="dot" cx="145" cy="95" r="6" fill="#00D4D8"/>
-        </svg>
+      <div class="sig-tag">Real results, not decoration</div>
+      <div class="sig-stats">
+        <div class="sig-stat">
+          <span class="sig-stat-num">1,200+</span>
+          <span class="sig-stat-label">Rows of raw data turned into a live report</span>
+        </div>
+        <div class="sig-stat">
+          <span class="sig-stat-num">50+ hrs</span>
+          <span class="sig-stat-label">Manual work saved every month per client</span>
+        </div>
+        <div class="sig-stat">
+          <span class="sig-stat-num">100%</span>
+          <span class="sig-stat-label">Automated — no more copy-paste updates</span>
+        </div>
       </div>
-      <div class="sig-tabs"><div class="sig-tab"></div><div class="sig-tab"></div><div class="sig-tab"></div></div>
-      <div class="sig-label">headcount.xlsx → live_dashboard</div>
-      <div class="sheet" id="sheet"></div>
-      <div class="bars" id="bars"></div>
-      <div class="sig-caption"><span>RAW ROWS: 1,204</span><span>AUTOMATED ✓</span></div>
     </div>
   </div>
 </section>
@@ -643,7 +615,6 @@
     const canvas = document.getElementById('network');
     const ctx = canvas.getContext('2d');
     let w, h, nodes = [], pulses = [];
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const LINK_DIST = 170;
 
     function resize(){
@@ -661,7 +632,6 @@
     }
 
     function maybeSpawnPulse(){
-      if(reduceMotion) return;
       if(Math.random() < 0.02 && nodes.length > 1){
         const a = nodes[Math.floor(Math.random()*nodes.length)];
         let b = nodes[Math.floor(Math.random()*nodes.length)];
@@ -730,41 +700,13 @@
       step();
       maybeSpawnPulse();
       draw();
-      if(!reduceMotion) requestAnimationFrame(loop);
+      requestAnimationFrame(loop);
     }
 
     resize();
     window.addEventListener('resize', resize);
-    if(reduceMotion){ draw(); } else { requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
   })();
-
-  // Build the sheet cells
-  const sheet = document.getElementById('sheet');
-  for(let i=0;i<24;i++){
-    const c = document.createElement('div');
-    c.className='cell';
-    sheet.appendChild(c);
-  }
-
-  // Build bars
-  const heights = [0.35,0.6,0.45,0.85,0.5,0.7,0.95,0.4];
-  const bars = document.getElementById('bars');
-  heights.forEach(h=>{
-    const b = document.createElement('div');
-    b.className='bar';
-    b.style.setProperty('--h', h);
-    bars.appendChild(b);
-  });
-
-  // Trigger animation on load + periodically
-  const sig = document.getElementById('signature');
-  function playSignature(){
-    sig.classList.remove('animate');
-    void sig.offsetWidth; // reflow
-    sig.classList.add('animate');
-  }
-  window.addEventListener('load', ()=> setTimeout(playSignature, 400));
-  setInterval(playSignature, 6000);
 
   // Scroll reveal
   const io = new IntersectionObserver((entries)=>{
