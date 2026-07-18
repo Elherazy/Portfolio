@@ -76,10 +76,20 @@
     background:rgba(11,11,11,0.78);
     border-bottom:1px solid var(--line);
   }
-  nav.wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px;}
-  .logo{font-weight:700; font-size:17px; display:flex; align-items:baseline; gap:8px; color:var(--text);}
-  .logo span{color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:13px;}
-  .navlinks{display:flex; gap:32px; font-size:14px; color:var(--muted);}
+  nav.wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; gap:20px;}
+  .logo{font-weight:700; font-size:17px; display:flex; flex-direction:column; gap:4px; color:var(--text); min-width:0;}
+  .logo .role-line{
+    color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:500;
+    display:flex; flex-wrap:wrap; gap:0 8px; letter-spacing:.01em;
+  }
+  .logo .role-line span.dot{color:var(--muted); opacity:.6;}
+  @media (max-width:720px){
+    .logo .role-line{font-size:10px; max-width:170px;}
+  }
+  @media (max-width:480px){
+    .logo .role-line{display:none;}
+  }
+  .navlinks{display:flex; gap:32px; font-size:14px; color:var(--muted); flex-shrink:0;}
   .navlinks a{position:relative;}
   .navlinks a::after{
     content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:var(--accent);
@@ -88,7 +98,7 @@
   .navlinks a:hover{color:var(--text);}
   .navlinks a:hover::after{width:100%;}
   .nav-cta{
-    display:inline-flex; align-items:center; gap:8px;
+    display:inline-flex; align-items:center; gap:8px; flex-shrink:0;
     border:1px solid var(--wa); color:var(--wa);
     padding:8px 16px; border-radius:100px; font-size:13px; font-family:'JetBrains Mono',monospace;
     transition:.2s;
@@ -178,6 +188,7 @@
   .stat{border-top:1px solid var(--line); padding-top:14px;}
   .stat b{display:block; font-family:'Space Grotesk',sans-serif; font-size:26px; color:var(--accent);}
   .stat span{color:var(--muted); font-size:13px;}
+  .about-cta{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
 
   /* Services */
   .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
@@ -241,6 +252,38 @@
   .tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
   .tag{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--accent); background:var(--accent-dim); padding:4px 8px; border-radius:5px;}
 
+  /* Projects (real work with images + live links) */
+  .projects-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+  @media (max-width:700px){.projects-grid{grid-template-columns:1fr;}}
+  .project-card{
+    display:block; background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    overflow:hidden; transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .project-card:hover{transform:translateY(-4px); border-color:var(--accent); box-shadow:0 0 26px -10px rgba(0,212,216,.35);}
+  .project-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:18px 20px 0;
+  }
+  .project-head h3{font-size:17px; color:var(--text);}
+  .project-head .visit{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent);
+    display:flex; align-items:center; gap:5px; white-space:nowrap; flex-shrink:0;
+  }
+  .project-head .visit svg{width:12px; height:12px;}
+  .project-thumb{
+    margin:16px 20px 0; height:170px; border-radius:10px; overflow:hidden;
+    background:var(--surface-2); border:1px dashed var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .project-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .project-thumb .placeholder{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    color:var(--muted); font-size:12px; text-align:center; padding:0 20px;
+  }
+  .project-thumb .placeholder svg{width:26px; height:26px; color:var(--muted); opacity:.6;}
+  .project-body{padding:16px 20px 22px;}
+  .project-body p{color:var(--muted); font-size:13.5px;}
+
   /* Floating WhatsApp button */
   .wa-float{
     position:fixed; right:22px; bottom:22px; z-index:60;
@@ -266,6 +309,30 @@
   }
   .wa-float:hover .wa-tip{opacity:1; right:76px;}
   @media (max-width:600px){ .wa-float .wa-tip{display:none;} }
+
+  /* Certificates */
+  .cert-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:900px){.cert-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.cert-grid{grid-template-columns:1fr;}}
+  .cert-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .cert-card:hover{transform:translateY(-4px); border-color:var(--accent); box-shadow:0 0 26px -10px rgba(0,212,216,.35);}
+  .cert-thumb{
+    height:150px; background:var(--surface-2); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .cert-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .cert-thumb .placeholder{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    color:var(--muted); font-size:11.5px; text-align:center; padding:0 16px;
+  }
+  .cert-thumb .placeholder svg{width:22px; height:22px; color:var(--muted); opacity:.6;}
+  .cert-body{padding:18px 20px;}
+  .cert-body h4{font-size:15.5px; margin-bottom:4px; color:var(--text);}
+  .cert-body span.issuer{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--accent); display:block; margin-bottom:8px;}
+  .cert-body p{color:var(--muted); font-size:13px;}
 
   /* Contact strip */
   .contact-strip{
@@ -318,11 +385,21 @@
 
 <header>
   <nav class="wrap">
-    <div class="logo">MOHAMED ELHERAZY <span>// HR + Systems</span></div>
+    <div class="logo">
+      MOHAMED ELHERAZY
+      <div class="role-line">
+        <span>HR Specialist</span><span class="dot">·</span>
+        <span>Data Analyst</span><span class="dot">·</span>
+        <span>Web Developer</span><span class="dot">·</span>
+        <span>Automation Specialist</span>
+      </div>
+    </div>
     <div class="navlinks">
       <a href="#about">About</a>
       <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
       <a href="#work">Work</a>
+      <a href="#certificates">Certificates</a>
       <a href="#process">Process</a>
     </div>
     <a href="https://wa.me/201279552202?text=Hi%20Mohamed%2C%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener" class="nav-cta">
@@ -383,6 +460,12 @@
       <p style="color:var(--muted); font-size:15.5px; margin-top:14px;">
         That mix is what I bring to freelance work — I understand the operational side of a business, and I can build the software for it.
       </p>
+      <div class="about-cta">
+        <a href="assets/Mohamed-Elherazy-CV.pdf" download class="btn btn-cyan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Download CV
+        </a>
+      </div>
     </div>
     <div class="reveal">
       <div class="stat-row">
@@ -443,9 +526,62 @@
   </div>
 </section>
 
+<section id="projects">
+  <div class="wrap">
+    <div class="kicker">03 — Projects</div>
+    <h2 class="sec-title">Live projects</h2>
+    <p class="sec-lead">Real builds with a link you can actually open. Tap a card to view the project.</p>
+
+    <div class="projects-grid">
+
+      <!-- PROJECT CARD TEMPLATE — duplicate this block for each project.
+           1) Set the href below to the project's live URL.
+           2) Replace the placeholder div inside .project-thumb with an <img src="your-image.jpg" alt="Project name">
+           3) Edit the title and description text. -->
+      <a class="project-card reveal" href="https://your-project-link.com" target="_blank" rel="noopener">
+        <div class="project-head">
+          <h3>Project Name</h3>
+          <span class="visit">View project
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </span>
+        </div>
+        <div class="project-thumb">
+          <!-- Replace this placeholder with: <img src="images/project-1.jpg" alt="Project Name"> -->
+          <div class="placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 4-5 5 4"/><circle cx="8" cy="9" r="1.4"/></svg>
+            Add project image here
+          </div>
+        </div>
+        <div class="project-body">
+          <p>Short description of what the project does and the problem it solves for the client.</p>
+        </div>
+      </a>
+
+      <a class="project-card reveal" href="https://your-project-link.com" target="_blank" rel="noopener">
+        <div class="project-head">
+          <h3>Project Name</h3>
+          <span class="visit">View project
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </span>
+        </div>
+        <div class="project-thumb">
+          <div class="placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 4-5 5 4"/><circle cx="8" cy="9" r="1.4"/></svg>
+            Add project image here
+          </div>
+        </div>
+        <div class="project-body">
+          <p>Short description of what the project does and the problem it solves for the client.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 <section class="process" id="process">
   <div class="wrap" style="padding:80px 0;">
-    <div class="kicker">03 — Process</div>
+    <div class="kicker">04 — Process</div>
     <h2 class="sec-title" style="margin-bottom:40px;">How a project runs</h2>
     <div class="steps">
       <div class="step"><span class="n">01</span><h4>Scope the problem</h4><p>We talk through what's slow or manual today, and what "done" looks like.</p></div>
@@ -458,7 +594,7 @@
 
 <section id="work">
   <div class="wrap">
-    <div class="kicker">04 — Work</div>
+    <div class="kicker">05 — Work</div>
     <h2 class="sec-title">Recent builds</h2>
     <p class="sec-lead">A sample of the kind of projects I take on. Case studies and live links added as projects wrap.</p>
     <div class="work-grid">
@@ -558,9 +694,67 @@
   </div>
 </section>
 
+<section id="certificates">
+  <div class="wrap">
+    <div class="kicker">06 — Certificates</div>
+    <h2 class="sec-title">Courses &amp; certifications</h2>
+    <p class="sec-lead">Training I've completed that backs up the skills above.</p>
+
+    <div class="cert-grid">
+
+      <!-- CERTIFICATE CARD TEMPLATE — duplicate this block for each certificate.
+           Replace the placeholder div with <img src="images/cert-1.jpg" alt="Certificate name">,
+           and edit the course name, issuer and year. -->
+      <div class="cert-card reveal">
+        <div class="cert-thumb">
+          <!-- Replace this placeholder with: <img src="images/cert-1.jpg" alt="Course name"> -->
+          <div class="placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5L7 21l5-2 5 2-1.5-8.5"/></svg>
+            Add certificate image here
+          </div>
+        </div>
+        <div class="cert-body">
+          <h4>Course Name</h4>
+          <span class="issuer">Issuer · Year</span>
+          <p>One line on what the course covered or the skill it built.</p>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-thumb">
+          <div class="placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5L7 21l5-2 5 2-1.5-8.5"/></svg>
+            Add certificate image here
+          </div>
+        </div>
+        <div class="cert-body">
+          <h4>Course Name</h4>
+          <span class="issuer">Issuer · Year</span>
+          <p>One line on what the course covered or the skill it built.</p>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-thumb">
+          <div class="placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5L7 21l5-2 5 2-1.5-8.5"/></svg>
+            Add certificate image here
+          </div>
+        </div>
+        <div class="cert-body">
+          <h4>Course Name</h4>
+          <span class="issuer">Issuer · Year</span>
+          <p>One line on what the course covered or the skill it built.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section class="contact-strip">
   <div class="wrap">
-    <div class="kicker">05 — Get in touch</div>
+    <div class="kicker">07 — Get in touch</div>
     <div class="contact-strip-box reveal">
       <div>
         <h2>Have a project in mind?</h2>
